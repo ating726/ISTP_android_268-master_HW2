@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.user.myapplication.adapter.PokemonListViewAdapter;
+import com.example.user.myapplication.fragment.PokemonListFragment;
 import com.example.user.myapplication.model.PokemonInfo;
 import com.squareup.picasso.Picasso;
 
@@ -108,20 +110,39 @@ public class PokemonDetailActivity extends CustomizedActivity {
         if (itemId == R.id.action_save) {
             Intent intent = new Intent();
             intent.putExtra(PokemonInfo.nameKey, mPokemonInfo.name);
-            setResult(PokemonListActivity.removeFromList, intent);
+            setResult(PokemonListActivity.removeFromList, intent); // ?
+
+            Log.d("remove","detail_remove_test");
+
             finish();
             return true;
-        } else if (itemId == R.id.action_level_up) {
 
-            int levelUp = Integer.parseInt(levelText.getText().toString());
+        /** Homework 2 */
+        } else if (itemId == R.id.action_level_up) {
+            int levelUp;
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+
+            levelUp = Integer.parseInt(levelText.getText().toString());
             levelUp += 1;
             levelText.setText(String.valueOf(levelUp));
 
+            bundle.putInt("levelUp",levelUp);
+            intent.putExtras(bundle);
 
+            intent.putExtra(PokemonInfo.nameKey,mPokemonInfo.name);
 
+            setResult(PokemonListFragment.pokemonLevelUp, intent);
 
+            Log.d("levelUp","detail_levelUp_test");
 
+            finish();
+            return true;
         }
+        /** End */
+
+
+
         return false;
     }
 

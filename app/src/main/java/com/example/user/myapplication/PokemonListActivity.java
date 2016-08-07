@@ -13,6 +13,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.myapplication.adapter.PokemonListViewAdapter;
@@ -20,11 +21,12 @@ import com.example.user.myapplication.model.OwningPokemonDataManager;
 import com.example.user.myapplication.model.PokemonInfo;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Created by user on 2016/7/25.
  */
-public class PokemonListActivity extends CustomizedActivity implements AdapterView.OnItemClickListener, DialogInterface.OnClickListener{
+public class PokemonListActivity extends CustomizedActivity implements AdapterView.OnItemClickListener, DialogInterface.OnClickListener {
 
     PokemonListViewAdapter adapter;
     AlertDialog alertDialog;
@@ -34,7 +36,7 @@ public class PokemonListActivity extends CustomizedActivity implements AdapterVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon_list);
 
-        ListView listView = (ListView)findViewById(R.id.listView);
+        ListView listView = (ListView) findViewById(R.id.listView);
 
         OwningPokemonDataManager dataManager = new OwningPokemonDataManager(this);
 
@@ -71,17 +73,15 @@ public class PokemonListActivity extends CustomizedActivity implements AdapterVi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if(itemId == R.id.action_delete) {
+        if (itemId == R.id.action_delete) {
             Log.d("menuItem", "action_delete");
-            if(adapter.selectedPokemons.size() > 0)
+            if (adapter.selectedPokemons.size() > 0)
                 alertDialog.show();
             return true;
-        }
-        else if(itemId == R.id.action_heal) {
+        } else if (itemId == R.id.action_heal) {
             Log.d("menuItem", "action_heal");
             return true;
-        }
-        else if(itemId == R.id.action_settings) {
+        } else if (itemId == R.id.action_settings) {
             Log.d("menuItem", "action_settings");
             return true;
         }
@@ -91,6 +91,7 @@ public class PokemonListActivity extends CustomizedActivity implements AdapterVi
 
     public final static int detailActivityRequestCode = 1;
     public final static int removeFromList = 1;
+//    public final static int pokemonLevelUp = 2;
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -101,32 +102,49 @@ public class PokemonListActivity extends CustomizedActivity implements AdapterVi
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == detailActivityRequestCode) {
-            if(resultCode == removeFromList) {
-                String pokemonName = data.getStringExtra(PokemonInfo.nameKey);
-                PokemonInfo pokemonInfo = adapter.getItemWithName(pokemonName);
-                if(pokemonInfo != null) {
-                    adapter.remove(pokemonInfo);
-                    Toast.makeText(this, pokemonInfo.name + "已被存入電腦", Toast.LENGTH_LONG).show();
-                }
-            }
-        }
 
-
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == detailActivityRequestCode) {
+//            if (resultCode == removeFromList) {
+//                String pokemonName = data.getStringExtra(PokemonInfo.nameKey);
+//                PokemonInfo pokemonInfo = adapter.getItemWithName(pokemonName);
+//                if (pokemonInfo != null) {
+//                    Log.d("remove", "remove_list_test");
+//                    adapter.remove(pokemonInfo);
+//                    Toast.makeText(this, pokemonInfo.name + "已被存入電腦", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//            /** Homework 2 */
+//            if (resultCode == pokemonLevelUp) {
+//                Bundle bundle;
+//                int levelUp;
+//
+//                bundle = getIntent().getExtras();
+//                levelUp = bundle.getInt("levelUp");
+//                String pokemonName = data.getStringExtra(PokemonInfo.nameKey);
+//                PokemonInfo pokemonInfo = adapter.getItemWithName(pokemonName);
+//
+//                pokemonInfo.level = levelUp;
+//
+//                Log.d("levelUp", "levelUp_list_test");
+//                adapter.update(pokemonInfo);
+//
+//                Toast.makeText(this, pokemonInfo.name + " level up", Toast.LENGTH_LONG).show();
+//            }
+//            /** End */
+//        }
+//    }
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
 
-        if(which == AlertDialog.BUTTON_NEGATIVE) {
+        if (which == AlertDialog.BUTTON_NEGATIVE) {
             Toast.makeText(this, "取消丟棄", Toast.LENGTH_SHORT).show();
-        }
-        else if(which == AlertDialog.BUTTON_POSITIVE) {
+        } else if (which == AlertDialog.BUTTON_POSITIVE) {
 
-            for(PokemonInfo pokemonInfo : adapter.selectedPokemons) {
+            for (PokemonInfo pokemonInfo : adapter.selectedPokemons) {
                 adapter.remove(pokemonInfo);
             }
 

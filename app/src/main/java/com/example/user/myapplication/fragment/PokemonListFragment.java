@@ -30,7 +30,7 @@ import java.util.ArrayList;
 /**
  * Created by user on 2016/8/4.
  */
-public class PokemonListFragment extends Fragment implements AdapterView.OnItemClickListener, DialogInterface.OnClickListener{
+public class PokemonListFragment extends Fragment implements AdapterView.OnItemClickListener, DialogInterface.OnClickListener {
 
     private Activity activity;
     private ArrayList<PokemonInfo> pokemonInfos;
@@ -63,7 +63,7 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.activity_pokemon_list, container, false);
-        ListView listView = (ListView)fragmentView.findViewById(R.id.listView);
+        ListView listView = (ListView) fragmentView.findViewById(R.id.listView);
         adapter = new PokemonListViewAdapter(activity, //context
                 R.layout.row_view_pokemon_list, //row view layout id
                 pokemonInfos); //data
@@ -87,11 +87,10 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public void onClick(DialogInterface dialog, int which) {
 
-        if(which == AlertDialog.BUTTON_NEGATIVE) {
+        if (which == AlertDialog.BUTTON_NEGATIVE) {
             Toast.makeText(activity, "取消丟棄", Toast.LENGTH_SHORT).show();
-        }
-        else if(which == AlertDialog.BUTTON_POSITIVE) {
-            for(PokemonInfo pokemonInfo : adapter.selectedPokemons) {
+        } else if (which == AlertDialog.BUTTON_POSITIVE) {
+            for (PokemonInfo pokemonInfo : adapter.selectedPokemons) {
                 adapter.remove(pokemonInfo);
             }
 
@@ -100,6 +99,7 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
 
     public final static int detailActivityRequestCode = 1;
     public final static int removeFromList = 1;
+    public final static int pokemonLevelUp = 2;
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -112,15 +112,41 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == detailActivityRequestCode) {
-            if(resultCode == removeFromList) {
+        if (requestCode == detailActivityRequestCode) {
+            if (resultCode == removeFromList) {
                 String pokemonName = data.getStringExtra(PokemonInfo.nameKey);
                 PokemonInfo pokemonInfo = adapter.getItemWithName(pokemonName);
-                if(pokemonInfo != null) {
+
+                Log.d("remove", "fragment_remove_test");
+
+                if (pokemonInfo != null) {
                     adapter.remove(pokemonInfo);
                     Toast.makeText(activity, pokemonInfo.name + "已被存入電腦", Toast.LENGTH_LONG).show();
                 }
             }
+
+            /** Homework 2 */
+            if (resultCode == pokemonLevelUp) {
+
+                Bundle bundle;
+//                bundle = getIntent().putExtras();
+                // bug?
+                int levelUp;
+
+                String pokemonName = data.getStringExtra(PokemonInfo.nameKey);
+                PokemonInfo pokemonInfo = adapter.getItemWithName(pokemonName);
+
+                pokemonInfo.level = pokemonInfo.level+1;
+
+//                levelUp = bundle.getInt("levelUp");
+//                pokemonInfo.level = levelUp;
+
+                Log.d("levelUp", "fragment_levelUp_test");
+
+                adapter.update(pokemonInfo);
+
+            }
+
         }
 
     }
@@ -133,22 +159,22 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if(itemId == R.id.action_delete) {
+        if (itemId == R.id.action_delete) {
             Log.d("menuItem", "action_delete");
-            if(adapter.selectedPokemons.size() > 0)
+            if (adapter.selectedPokemons.size() > 0)
                 alertDialog.show();
             return true;
-        }
-        else if(itemId == R.id.action_heal) {
+        } else if (itemId == R.id.action_heal) {
             Log.d("menuItem", "action_heal");
             return true;
-        }
-        else if(itemId == R.id.action_settings) {
+        } else if (itemId == R.id.action_settings) {
             Log.d("menuItem", "action_settings");
             return true;
         }
 
         return false;
     }
+
+
 
 }

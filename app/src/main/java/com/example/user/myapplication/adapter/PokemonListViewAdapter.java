@@ -1,6 +1,7 @@
 package com.example.user.myapplication.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +81,8 @@ public class PokemonListViewAdapter extends ArrayAdapter<PokemonInfo> {
         oldData.maxHP = newData.maxHP;
         oldData.level = newData.level;
         notifyDataSetChanged();
+
+
     }
 
     @Override
@@ -87,6 +90,16 @@ public class PokemonListViewAdapter extends ArrayAdapter<PokemonInfo> {
         selectedPokemons.remove(object);
         super.remove(object);
     }
+
+
+    /** Homework 2 */
+//    public void PokemonLevelUp(PokemonInfo object){
+//        TextView levelText;
+//
+//    }
+    /** End */
+
+
 
     public static class ViewHolder implements View.OnClickListener{
         private ImageView appearanceImg;
@@ -124,6 +137,12 @@ public class PokemonListViewAdapter extends ArrayAdapter<PokemonInfo> {
             mPicasso.load(pokemonInfo.listImgId).into(appearanceImg);
             mPokemonInfo = pokemonInfo;
         }
+
+        /** Homework 2 */
+//        public void setLevelUp(int levelUp){
+//            levelText.setText(String.valueOf(levelUp));
+//        }
+        /** End */
 
         public void setSelected() {
             mPokemonInfo.isSelected = !mPokemonInfo.isSelected;
