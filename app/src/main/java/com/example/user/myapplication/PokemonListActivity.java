@@ -91,7 +91,7 @@ public class PokemonListActivity extends CustomizedActivity implements AdapterVi
 
     public final static int detailActivityRequestCode = 1;
     public final static int removeFromList = 1;
-//    public final static int pokemonLevelUp = 2;
+    public final static int pokemonLevelUp = 2;
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -103,39 +103,39 @@ public class PokemonListActivity extends CustomizedActivity implements AdapterVi
     }
 
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == detailActivityRequestCode) {
-//            if (resultCode == removeFromList) {
-//                String pokemonName = data.getStringExtra(PokemonInfo.nameKey);
-//                PokemonInfo pokemonInfo = adapter.getItemWithName(pokemonName);
-//                if (pokemonInfo != null) {
-//                    Log.d("remove", "remove_list_test");
-//                    adapter.remove(pokemonInfo);
-//                    Toast.makeText(this, pokemonInfo.name + "已被存入電腦", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//            /** Homework 2 */
-//            if (resultCode == pokemonLevelUp) {
-//                Bundle bundle;
-//                int levelUp;
-//
-//                bundle = getIntent().getExtras();
-//                levelUp = bundle.getInt("levelUp");
-//                String pokemonName = data.getStringExtra(PokemonInfo.nameKey);
-//                PokemonInfo pokemonInfo = adapter.getItemWithName(pokemonName);
-//
-//                pokemonInfo.level = levelUp;
-//
-//                Log.d("levelUp", "levelUp_list_test");
-//                adapter.update(pokemonInfo);
-//
-//                Toast.makeText(this, pokemonInfo.name + " level up", Toast.LENGTH_LONG).show();
-//            }
-//            /** End */
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == detailActivityRequestCode) {
+            if (resultCode == removeFromList) {
+                String pokemonName = data.getStringExtra(PokemonInfo.nameKey);
+                PokemonInfo pokemonInfo = adapter.getItemWithName(pokemonName);
+                if (pokemonInfo != null) {
+                    Log.d("remove", "remove_list_test");
+                    adapter.remove(pokemonInfo);
+                    Toast.makeText(this, pokemonInfo.name + "已被存入電腦", Toast.LENGTH_LONG).show();
+                }
+            }
+            /** Homework 2 */
+            if (resultCode == pokemonLevelUp) {
+                Bundle bundle;
+                int levelUp;
+
+                bundle = getIntent().getExtras();
+                levelUp = bundle.getInt("levelUp");
+                String pokemonName = data.getStringExtra(PokemonInfo.nameKey);
+                PokemonInfo pokemonInfo = adapter.getItemWithName(pokemonName);
+
+                pokemonInfo.level = levelUp;
+
+                Log.d("levelUp", "levelUp_list_test");
+                adapter.update(pokemonInfo);
+
+                Toast.makeText(this, pokemonInfo.name + " level up", Toast.LENGTH_LONG).show();
+            }
+            /** End */
+        }
+    }
 
     @Override
     public void onClick(DialogInterface dialog, int which) {

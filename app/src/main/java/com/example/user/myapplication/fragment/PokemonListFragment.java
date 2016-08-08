@@ -32,6 +32,7 @@ import java.util.ArrayList;
  */
 public class PokemonListFragment extends Fragment implements AdapterView.OnItemClickListener, DialogInterface.OnClickListener {
 
+
     private Activity activity;
     private ArrayList<PokemonInfo> pokemonInfos;
     private AlertDialog alertDialog;
@@ -42,6 +43,8 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
 //        Bundle args = new Bundle();
         PokemonListFragment fragment = new PokemonListFragment();
 //        fragment.setArguments(args);
+
+
         return fragment;
     }
 
@@ -56,6 +59,7 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
 
         pokemonInfos = dataManager.getPokemonInfos();
         pokemonInfos.add(0, initThreePokemons[selectedPokemonIndex]);
+
 
     }
 
@@ -128,20 +132,20 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
             /** Homework 2 */
             if (resultCode == pokemonLevelUp) {
 
-                Bundle bundle;
-//                bundle = getIntent().putExtras();
+                // Bundle bundle = this.getIntent().putExtras();
                 // bug?
-                int levelUp;
-
+//                int a = data.getIntExtra("levelUp",1);
                 String pokemonName = data.getStringExtra(PokemonInfo.nameKey);
                 PokemonInfo pokemonInfo = adapter.getItemWithName(pokemonName);
+
+
 
                 pokemonInfo.level = pokemonInfo.level+1;
 
 //                levelUp = bundle.getInt("levelUp");
 //                pokemonInfo.level = levelUp;
 
-                Log.d("levelUp", "fragment_levelUp_test");
+//                Log.d("levelUp", "fragment_levelUp_test");
 
                 adapter.update(pokemonInfo);
 
@@ -174,7 +178,6 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
 
         return false;
     }
-
 
 
 }

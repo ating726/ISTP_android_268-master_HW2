@@ -112,12 +112,12 @@ public class PokemonDetailActivity extends CustomizedActivity {
             intent.putExtra(PokemonInfo.nameKey, mPokemonInfo.name);
             setResult(PokemonListActivity.removeFromList, intent); // ?
 
-            Log.d("remove","detail_remove_test");
+            Log.d("remove", "detail_remove_test");
 
             finish();
             return true;
 
-        /** Homework 2 */
+            /** Homework 2 */
         } else if (itemId == R.id.action_level_up) {
             int levelUp;
             Intent intent = new Intent();
@@ -127,20 +127,24 @@ public class PokemonDetailActivity extends CustomizedActivity {
             levelUp += 1;
             levelText.setText(String.valueOf(levelUp));
 
-            bundle.putInt("levelUp",levelUp);
-            intent.putExtras(bundle);
+//            bundle.putInt("levelUp", levelUp);
+//            intent.putExtras(bundle);
 
-            intent.putExtra(PokemonInfo.nameKey,mPokemonInfo.name);
+            intent.putExtra("levelUp",levelUp);
+
+
+            intent.putExtra(PokemonInfo.nameKey, mPokemonInfo.name);
 
             setResult(PokemonListFragment.pokemonLevelUp, intent);
 
-            Log.d("levelUp","detail_levelUp_test");
+            Log.d("detail_levelUp_test", "levelUp:" + levelUp);
+
+           // startActivity(intent);
 
             finish();
             return true;
         }
         /** End */
-
 
 
         return false;
